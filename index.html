@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Career AI Tutor</title>
+</head>
+<body>
+  <h1>Career AI Tutor</h1>
+
+  <h3>Enter your goal</h3>
+  Job: <input id="job"><br><br>
+  Degree: <input id="degree"><br><br>
+  <button onclick="getSkills()">Get Skills</button>
+
+  <pre id="skills"></pre>
+
+  <h3>Pick a skill</h3>
+  Skill: <input id="skill"><br><br>
+  <button onclick="getLesson()">Teach Me</button>
+
+  <pre id="lesson"></pre>
+
+<script>
+async function getSkills() {
+  const job = document.getElementById("job").value;
+  const degree = document.getElementById("degree").value;
+
+  const res = await fetch("http://localhost:3000/skills", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ job, degree })
+  });
+
+  const data = await res.json();
+  document.getElementById("skills").innerText = data.result;
+}
+
+async function getLesson() {
+  const skill = document.getElementById("skill").value;
+
+  const res = await fetch("http://localhost:3000/lesson", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ skill })
+  });
+
+  const data = await res.json();
+  document.getElementById("lesson").innerText = data.result;
+}
+</script>
+</body>
+</html>
